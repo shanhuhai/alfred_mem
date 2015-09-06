@@ -18,45 +18,45 @@ $match[1] = (int)$match[1];
 $match[2] = strtolower($match[2]);
 
 $wf = new Workflows();
-function output($bytes)
+function output($bits)
 {
     global $wf;
-    $output = sprintf("% dBits % .2fByte % .2fKB % .2fMB % .2fGB % .2fTB % .2fPB", $bytes * 8, $bytes, $bytes / 1024, $bytes / 1024 / 1024, $bytes / 1024 / 1024 / 1024, $bytes / 1024 / 1024 / 1024 / 1024, $bytes / 1024 / 1024 / 1024 / 1024 / 1024);
+    $output = sprintf("% dBits % .2fByte % .2fKB % .2fMB % .2fGB % .2fTB % .2fPB", $bits, $bits / 8, $bits / 1024 / 8, $bits / 1024 / 1024 / 8, $bits / 1024 / 1024 / 1024 / 8, $bits / 1024 / 1024 / 1024 / 1024 / 8, $bits / 1024 / 1024 / 1024 / 1024 / 1024 / 8);
 
     $outputArr = explode(" ", $output);
     foreach ($outputArr as $key => $val) {
 
-        $wf->result(0, $val, $val, '', 'icon.gif');
+        $wf->result($key, $val, $val, '', 'icon.png');
     }
     echo $wf->toxml();
 }
 
 switch ($match[2]) {
     case "bit" :
-        output($match[1] / 1024);
+        output($match[1]);
         break;
     case "b" :
-        output($match[1]);
+        output($match[1] * 8);
         break;
 
     case "kb":
-        output($match[1] * 1024);
+        output($match[1] * 1024 * 8);
         break;
 
     case "mb":
-        output($match[1] * 1024 * 1024);
+        output($match[1] * 1024 * 1024 * 8);
         break;
 
     case "gb":
-        output($match[1] * 1024 * 1024 * 1024);
+        output($match[1] * 1024 * 1024 * 1024 * 8);
         break;
 
     case "tb":
-        output($match[1] * 1024 * 1024 * 1024 * 1024);
+        output($match[1] * 1024 * 1024 * 1024 * 1024 * 8);
         break;
 
     case "pb":
-        output($match[1] * 1024 * 1024 * 1024 * 1024 * 1024);
+        output($match[1] * 1024 * 1024 * 1024 * 1024 * 1024 * 8);
         break;
 }
 
